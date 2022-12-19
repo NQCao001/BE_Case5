@@ -21,25 +21,25 @@ export class UserService {
     }
     addAccount = async (req: Request, res: Response) => {
         let user = req.body;
-        let userFind = await this.UserRepository.findOneBy({userName:user.userName});
-            if (userFind) {
-                return res.status(201).json({
-                    message: 'Tai khoan da ton tai!!!',
-                    check: false
-                })
-            } else {
-                user.password = await bcrypt.hash(user.password, 10)
-                await this.UserRepository.save(user);
-                return res.status(201).json({
-                    message: "Success",
-                    check: true,
-                })
-            }
+        let userFind = await this.UserRepository.findOneBy({userName: user.userName});
+        if (userFind) {
+            return res.status(201).json({
+                message: 'Tai khoan da ton tai!!!',
+                check: false
+            })
+        } else {
+            user.password = await bcrypt.hash(user.password, 10)
+            await this.UserRepository.save(user);
+            return res.status(201).json({
+                message: "Success",
+                check: true,
+            })
         }
+    }
     loginAccount = async (req: Request, res: Response) => {
         let user = req.body;
         let userFind = await this.UserRepository.findOneBy({
-            username: user.username
+            userName: user.userName
         });
         if (!userFind) {
             return res.status(201).json({
@@ -53,18 +53,26 @@ export class UserService {
                 })
             } else {
                 let payload = {
-                    idUser: userFind._id,
+                    idUser: userFind.id,
                     username: userFind.username
                 }
 
                 let token = await jwt.sign(payload, SECRET, {
                     expiresIn: 36000
                 })
-                return res.status(200).json({
-                    token: token,
-                    message: "Success!!!",
-                    idUser: userFind._id
-                })
+                if(userFind.role){
+                    return res.status(200).json({
+                        token: token,
+                        message: "Admin Dang nhap thanh cong!!!",
+                        idUser: userFind.id
+                    })
+                }else {
+                    return res.status(200).json({
+                        token: token,
+                        message: "User Dang nhap thanh cong!!!",
+                        idUser: userFind.id
+                    })
+                }
             }
         }
     }

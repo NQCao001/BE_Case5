@@ -11,7 +11,7 @@ export class Blog{
     public content:string
     @Column({type:"boolean"})
     public status:boolean
-    @Column({type:"int"})
+    @Column({type:"int",default:0})
     public like:number
     @Column({type:"longtext"})
     public img:string

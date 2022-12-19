@@ -20,6 +20,9 @@ export class UserController {
     login = async (req:Request,res:Response)=>{
         return await this.userService.loginAccount(req,res)
     }
+    uploadUser = async (req:Request,res:Response)=>{
+        return await this.userService.editUser(req,res)
+    }
 }
 
 export default new UserController();

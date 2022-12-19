@@ -4,9 +4,13 @@ import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 export class User {
     @PrimaryGeneratedColumn({type: "int"})
     public readonly id:number
-    @Column({type:"boolean"})
+    @Column({type:"varchar",default:""})
+    public MyName:string
+    @Column({type:"varchar",default:""})
+    public birthday:string
+    @Column({type:"boolean",default:true})
     public status:boolean
-    @Column({type:"boolean"})
+    @Column({type:"boolean",default:false})
     public role:boolean
     @Column({type:"varchar"})
     public userName: string

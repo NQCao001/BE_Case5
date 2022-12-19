@@ -62,12 +62,16 @@ export class UserService {
                 })
                 if(userFind.role){
                     return res.status(200).json({
+                        role:userFind.role,
+                        userName:userFind.userName,
                         token: token,
                         message: "Admin Dang nhap thanh cong!!!",
                         idUser: userFind.id
                     })
                 }else {
                     return res.status(200).json({
+                        role:userFind.role,
+                        userName:userFind.userName,
                         token: token,
                         message: "User Dang nhap thanh cong!!!",
                         idUser: userFind.id
@@ -75,5 +79,13 @@ export class UserService {
                 }
             }
         }
+    }
+    editUser = async (req:Request,res:Response)=>{
+        let info = req.body;
+        let id = +req.params.id;
+        await this.UserRepository.update({id: id}, info)
+        return res.status(201).json({
+            message: "Edit Success!!!"
+        })
     }
 }

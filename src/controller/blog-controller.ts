@@ -7,10 +7,10 @@ export class BlogController{
         this.blogService = new BlogService();
     }
     getAll=async (req:Request,res:Response)=>{
-        let blog =this.blogService.findAll();
-        res.render('/',{
-            listCart: blog
-        })
+        return await this.blogService.findAll(req,res)
+    }
+    createBlog = async (req:Request,res:Response)=>{
+        return await this.blogService.addBlog(req,res)
     }
 }
 export default new BlogController();

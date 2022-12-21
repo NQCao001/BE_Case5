@@ -9,7 +9,7 @@ export class Blog{
     public title:string
     @Column({type:"longtext"})
     public content:string
-    @Column({type:"boolean"})
+    @Column({type:"boolean",default:true})
     public status:boolean
     @Column({type:"int",default:0})
     public like:number

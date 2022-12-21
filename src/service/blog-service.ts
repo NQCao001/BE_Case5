@@ -1,6 +1,7 @@
 import {AppDataSource} from "../views/data source";
 
 import {Blog} from "../model/blog";
+import {Request, Response} from "express";
 
 export class BlogService{
     private BlogRepository:any
@@ -10,8 +11,18 @@ export class BlogService{
             this.BlogRepository=await connection.getRepository(Blog);
         })
     }
-    findAll= async ()=>{
+    findAll= async (req:Request,res:Response)=>{
         let blog = await this.BlogRepository.find();
-        return blog;
+        return res.status(200).json({
+            message:'success',
+            blogs:blog
+        })
+    }
+    addBlog = async (req:Request,res:Response)=>{
+        let blog =req.body
+        await this.BlogRepository.save(blog)
+        return res.status(200).json({
+            message:"Thanh cong"
+        })
     }
 }

@@ -25,4 +25,22 @@ export class BlogService{
             message:"Thanh cong"
         })
     }
+    checkBlog = async (req:Request,res:Response)=>{
+        let id = +req.params.id
+        let blog = await this.BlogRepository.findOneById(id)
+        return res.status(200).json({
+            message:"lay blog",
+            blog:blog
+        })
+    }
+    upLike = async (req:Request,res:Response)=>{
+        let id= +req.params.id
+        let ac = await this.checkBlog;
+        console.log(ac)
+        // let id = +req.params.id;
+        // await this.BlogRepository.update({id: id}, info)
+        // return res.status(201).json({
+        //     message: "Edit Success!!!"
+        // })
+    }
 }

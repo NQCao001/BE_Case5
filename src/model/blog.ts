@@ -1,5 +1,6 @@
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {User} from "./user";
+import {Likes} from "./likes";
 
 @Entity({name:'blog'})
 export class Blog{
@@ -11,8 +12,8 @@ export class Blog{
     public content:string
     @Column({type:"boolean",default:true})
     public status:boolean
-    @Column({type:"int",default:0})
-    public like:number
+    @OneToMany(() => Likes, (like) => like.idBlog)
+    public likes: Likes[];
     @Column({type:"longtext"})
     public img:string
     @ManyToOne(()=>User)
